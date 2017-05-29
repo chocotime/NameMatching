@@ -1,37 +1,35 @@
+'''
+44032 ( : '가') + 초성 * 21 ( 중성 갯수 ) * 28 ( 종성 갯수 ) + 중성 * 28 + 종성 
+'''
 def init():
     men_name=input("남자 이름 입력 : ")
     girl_name=input("여자 이름 입력 : ")
-    # 남자 이름 먼저 : 0 , 여자이름 먼저 : 1
-    mode = 0
-    main_process(men_name, girl_name, mode)
+    # 이름 순서 바꾸기
+    reverse = False
+    main_process(men_name, girl_name, reverse)
     
-def main_process(men_name, girl_name, mode):
+def main_process(men_name, girl_name, reverse):
     dump = list()
     stage_a = list()
     stage_b = list()
     for i in range(6):
         
-        if(i&1):
-            if(mode):
-                dump.append(ord(men_name[i//2])-44032)
-            else:
-                dump.append(ord(girl_name[i//2])-44032)
+        if i<3:
+                dump.append(ord(men_name[i])-44032)
+                stage_a.append(getStroke(dump[i]))
         else:
-            if(mode):
-                dump.append(ord(girl_name[i//2])-44032)
-            else:
-                dump.append(ord(men_name[i//2])-44032)
-        stage_a.append(getStroke(dump[i]))
+                dump.append(ord(girl_name[i%3])-44032)
+                stage_a.insert( 2*i - 5, getStroke(dump[i]))
+        
     print(stage_a)
     
     for i in range(4):
         for j in range(5-i):
             if(i&1):
                 tmp = getLoveSum(stage_b[j], stage_b[j+1])
-                stage_a.append(tmp)
             else:
                 tmp = getLoveSum(stage_a[j], stage_a[j+1])
-                stage_b.append(tmp)
+            stage_b.append(tmp)
         if(i&1):
             stage_b=[]
             print(stage_a)
