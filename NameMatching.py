@@ -1,7 +1,15 @@
-def showKrElement(str):
+def main():
+    men_name="조학근"
+    girl_name="박홍주"
     dump = list()
-    for i in range(3):
-        dump.append(ord(str[i])-44032)
+    for i in range(6):
+        if(i<3):
+            dump.append(ord(men_name[i])-44032)
+        else:
+            dump.append(ord(girl_name[i%3])-44032)
+    print( getLoveSum( getStroke(dump[0]), getStroke(dump[3]) ) )
+    
+def getStroke(wordDump):
     chosung = [
                 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ',
                 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
@@ -44,12 +52,19 @@ def showKrElement(str):
                         'ㅆ':4, 'ㅇ':1, 'ㅈ':3, 'ㅊ':4, 'ㅋ':3,
                         'ㅌ':4, 'ㅍ':4, 'ㅎ':3
                     }
-    stroke_name = list();
-    for i in range(3):
-        stroke_jongsung=value_jongsung[jongsung[dump[i]%28]]
-        stroke_jungsung=value_jungsung[jungsung[(dump[i]//28)%28]]
-        stroke_chosung=value_chosung[chosung[(dump[i]//588)]]
-        stroke_name.append(stroke_chosung+stroke_jungsung+stroke_jongsung)
-        print(stroke_name[i])
+    stroke_chosung=value_chosung[chosung[(wordDump//588)]]
+    wordDump-=(wordDump//588)*588
+    stroke_jungsung=value_jungsung[jungsung[wordDump//28]]
+    wordDump-=(wordDump//28)*28
+    stroke_jongsung=value_jongsung[jongsung[wordDump]]
+    return (stroke_chosung+stroke_jungsung+stroke_jongsung)
+    
+def getLoveSum(stroke1, stroke2):
+    return (stroke1+stroke2)%10
+
+def getResult(stroke1, stroke2):
+    return stroke1*10+stroke2
+
 ''' 테스트 코드 '''
-showKrElement("김빡빡")
+main()
+print(getResult(7, 5))
