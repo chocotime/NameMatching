@@ -12,14 +12,14 @@ def main_process(men_name, girl_name, reverse):
     dump = list()
     stage_a = list()
     stage_b = list()
-    for i in range(6):
-        
-        if i<3:
-                dump.append(ord(men_name[i])-44032)
-                stage_a.append(getStroke(dump[i]))
+    for i in range(3):
+        if not reverse:
+            dump.append(ord(men_name[i])-44032)
+            dump.append(ord(girl_name[i])-44032)
         else:
-                dump.append(ord(girl_name[i%3])-44032)
-                stage_a.insert( 2*i - 5, getStroke(dump[i]))
+            dump.append(ord(girl_name[i])-44032)
+            dump.append(ord(men_name[i])-44032)
+        stage_a+=[getStroke(dump[2*i]), getStroke(dump[2*i+1])]
         
     print(stage_a)
     
@@ -27,9 +27,10 @@ def main_process(men_name, girl_name, reverse):
         for j in range(5-i):
             if(i&1):
                 tmp = getLoveSum(stage_b[j], stage_b[j+1])
+                stage_a.append(tmp)
             else:
                 tmp = getLoveSum(stage_a[j], stage_a[j+1])
-            stage_b.append(tmp)
+                stage_b.append(tmp)
         if(i&1):
             stage_b=[]
             print(stage_a)
