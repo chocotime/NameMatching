@@ -21,10 +21,11 @@ class LoveSum:
     stage1 = list()
     stage2 = list()
     stage3 = list()
-    
+    # Class내 변수 지정 개념
     def set_names(self, name_1, name_2):
         self.name_1=name_1
         self.name_2=name_2
+
     def name_mix(self):
         tmp=list()
         for i in range(3):
@@ -35,6 +36,7 @@ class LoveSum:
                 tmp.append(self.name_2[i])
                 tmp.append(self.name_1[i])
         return tmp
+    # 실제로 LoveSum을 진행하여 Stage들에 수 상태들을 저장
     def doLoveSum(self):
         dump = list()
         for i in range(3):
@@ -51,11 +53,14 @@ class LoveSum:
             
         for i in range(1,4,1):
             for j in range(5-i):
+                # exec: 문자열 포멧의 명령을 실행
                 exec("self.stage%d.append((self.stage%d[j]+self.stage%d[j+1])%%10)" % (i, i-1, i-1))
         
     def get_lovesum_result(self):
         return self.stage3[0]*10+self.stage3[1]
     
+    # 초성, 중성, 종성 순으로 인덱싱, 획 수 대로 딕셔너리 처리
+    # 이 둘을 바탕으로 계산한 한 글자의 획수 리턴
     def getStroke(self, wordDump):
         chosung = [
                     'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ',
@@ -100,10 +105,8 @@ class LoveSum:
         stroke_jungsung=stroke_moeum[jungsung[wordDump//28]]
         wordDump-=(wordDump//28)*28
         stroke_jongsung=stroke_jaeum[jongsung[wordDump]]
+        # 10글자 이상일시 다시 0부터 시작함
         return (stroke_chosung+stroke_jungsung+stroke_jongsung)
-    
-    def getLoveSum(self, stroke1, stroke2):
-        return (stroke1+stroke2)%10
     
     def clear(self):
         self.name_1=""
